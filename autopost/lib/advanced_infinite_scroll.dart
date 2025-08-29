@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'dart:async';
 import 'dart:math' as math;
+import 'custom_button.dart';
 
 class AdvancedInfiniteScroll extends StatefulWidget {
   final double? width;
@@ -293,15 +294,56 @@ class AdvancedInfiniteScrollDemo extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: AdvancedInfiniteScroll(
-        items: items,
-        itemMinHeight: 120,
-        negativeMargin: -10,
-        isTilted: false,
-        autoplay: true,
-        autoplaySpeed: 1.0,
-        autoplayDirection: "down",
-        pauseOnHover: true,
+      body: Stack(
+        children: [
+          AdvancedInfiniteScroll(
+            items: items,
+            itemMinHeight: 120,
+            negativeMargin: -10,
+            isTilted: false,
+            autoplay: true,
+            autoplaySpeed: 1.0,
+            autoplayDirection: "down",
+            pauseOnHover: true,
+          ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              height: 140,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  stops: [0.0, 0.3, 1.0],
+                  colors: [
+                    Colors.transparent,
+                    Colors.grey[850]!.withOpacity(0.8),
+                    Colors.grey[850]!,
+                  ],
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(24.0, 16.0, 24.0, 32.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    CustomButton(
+                      text: 'Get Started',
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/login');
+                      },
+                      variant: ButtonVariant.primary,
+                      size: ButtonSize.large,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
